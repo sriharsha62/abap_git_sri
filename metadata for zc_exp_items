@@ -1,0 +1,54 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.typeName: 'Accounting Document'
+@UI.headerInfo.typeNamePlural: 'Accounting Documents'
+@UI.headerInfo.title.value: 'posnr'
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.description.value: 'exp_desc'
+@UI.headerInfo.description.type: #STANDARD
+annotate view zc_exp_items
+    with 
+{
+
+   @UI.facet: [
+   {
+    id: '_ItemDetails',
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Item Details'
+    
+    
+    }
+    ]
+
+
+
+
+
+
+         
+    @UI.lineItem: [{ position: 10 , importance: #HIGH , label: 'Acc.Doc' }]
+    @UI.identification: [{ position: 10 ,  label: 'Acc.Doc' }]
+    belnr;
+     @UI.lineItem: [{ position: 20 , importance: #HIGH , label: 'Fiscal Year' }]
+     @UI.identification: [{ position: 20 , label: 'Fiscal Year' }]
+    gjahr;
+     @UI.lineItem: [{ position: 30 , importance: #HIGH , label: 'Acc.Item' }]
+     @UI.identification: [{ position: 30 , label: 'Acc.Item' }]
+    posnr;
+     @UI.lineItem: [{ position: 40 , importance: #HIGH , label: 'Descriptions' }]
+     @UI.identification: [{ position: 40 , label: 'Descriptions' }]
+    exp_desc;
+     @UI.lineItem: [{ position: 50 , importance: #HIGH , label: 'Amount' }]
+     @UI.identification: [{ position: 50 , label: 'Amount' }]
+    amount;
+     @UI.lineItem: [{ position: 60 , importance: #HIGH , label: 'Currency' }]
+     @UI.identification: [{ position: 60 , label: 'Currency' }]
+    currency;
+    @UI.lineItem: [{ position: 70 , importance: #HIGH , label: 'Change Date&Time' }]
+    //@UI.identification: [{ position: 70 , label: 'Change Date&Time' }]
+    change_date_time;
+    @UI.lineItem: [{ position: 80 , importance: #HIGH , label: 'Locl Date&Time' }]
+    //@UI.identification: [{ position: 80 , label: 'Locl Date&Time' }]
+    local_change_date_time;
+      
+    
+}
