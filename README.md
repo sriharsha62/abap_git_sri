@@ -1,17 +1,2 @@
 # abap_git_sri
 RAP Arrtifacts
--------------------------------------------------------------
-zi_exp_trans is root view entity
-zi_exp_item is child view entity for the direct root
--------------------------------------------------------------
-ZC_EXP_TRANS is project view or root view entity
-zc_exp_item is projection of child entiry
-----------------------------------------------------------------
-remaining are base interface views
---------------------------------------------------------------
-
-
-zi_exp_trans - Behaviour definition - created by creating behaviour over root view - zi_exp_trans.
-zc_exp_trans - behaviour projection - created by creating behaviour over projection view -  ZC_EXP_TRANS
-
-
