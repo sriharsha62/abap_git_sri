@@ -1,0 +1,161 @@
+CLASS zcl_test_hw DEFINITION
+  PUBLIC
+
+
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    INTERFACES:if_oo_adt_classrun.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_test_hw IMPLEMENTATION.
+  METHOD if_oo_adt_classrun~main.
+*    out->write( 'Ello World' ).
+
+
+
+
+*    SELECT mandt account name
+*    FROM zani_accounts
+*    INTO TABLE @DATA(lt_accounts).
+*    IF syst-subrc NE 0.
+*
+*
+*      lt_accounts = VALUE #( ( mandt = sy-mandt  account = 'CITI'    name  = 'CitiBank' )
+*                             ( mandt = sy-mandt  account = 'HDFCHAR' name  = 'HDFC Harsha')
+*                             ( mandt = sy-mandt  account = 'HDFCJYT' name  = 'HDFC Jyothi')
+*                             ( mandt = sy-mandt  account = 'CASHHAR' name  = 'Cash Harsha')
+*                             ( mandt = sy-mandt  account = 'CASHJYT' name  = 'Cash Jyothi')
+*
+*                           ).
+*
+*      INSERT zani_accounts FROM TABLE @lt_accounts.
+*
+*
+*    ENDIF.
+*
+*
+*    SELECT *
+*    FROM zani_expkind
+*    INTO TABLE @DATA(lt_expkind).
+*    IF syst-subrc NE 0.
+*
+*
+*      lt_expkind  = VALUE #( ( mandt = sy-mandt  exp_kind = 'NECE'    description  = 'Necessary' )
+*                             ( mandt = sy-mandt  exp_kind = 'DESC'    description  = 'Discretionary' )
+*                             ( mandt = sy-mandt  exp_kind = 'NA'    description  = 'Not Applicable' )
+*
+*                           ).
+*
+*      INSERT zani_expkind FROM TABLE @lt_expkind.
+*
+*
+*    ENDIF.
+*
+*    SELECT *
+*    FROM zani_exptype
+*    INTO TABLE @DATA(lt_exptype).
+*    IF syst-subrc NE 0.
+*
+*
+*      lt_exptype  = VALUE #( ( mandt = sy-mandt  exp_type = 'GROC'    description  = 'Gorcery' )
+*                             ( mandt = sy-mandt  exp_type = 'UTIL'    description  = 'Utility' )
+*                             ( mandt = sy-mandt  exp_type = 'MEDI'    description  = 'Medical' )
+*                             ( mandt = sy-mandt  exp_type = 'EDUC'    description  = 'Education' )
+*                             ( mandt = sy-mandt  exp_type = 'MAIN'    description  = 'Maintenance' )
+*                             ( mandt = sy-mandt  exp_type = 'EATO'    description  = 'Eatout' )
+*                             ( mandt = sy-mandt  exp_type = 'CRED'    description  = 'Credit In' )
+*
+*                           ).
+*
+*      INSERT zani_exptype FROM TABLE @lt_exptype.
+*
+*
+*    ENDIF.
+*
+*
+*    SELECT *
+*    FROM zani_members
+*    INTO TABLE @DATA(lt_members).
+*    IF syst-subrc NE 0.
+*
+*
+*      lt_members  = VALUE #(
+*                              ( mandt = sy-mandt  name = 'Sriharsha'  )
+*                              ( mandt = sy-mandt  name = 'Jyothi'  )
+*                              ( mandt = sy-mandt  name = 'Anirudh'  )
+*                              ( mandt = sy-mandt  name = 'Aadya'  )
+*
+*                           ).
+*
+*      INSERT zani_members FROM TABLE @lt_members.
+*
+*
+*    ENDIF.
+*
+*    SELECT *
+*    FROM zani_trans
+*    INTO TABLE @DATA(lt_trans).
+*    IF syst-subrc eq 0.
+*
+*
+*      lt_trans  = VALUE #(
+*                              ( mandt = sy-mandt belnr = '1' gjahr = '2021' clearing_date = syst-datum account = 'CITI'
+*                                        exp_desc = 'Salary Credited' amount = '12345.00' member = 'Sriharsha' exp_type = 'CRED'
+*                                        exp_kind = 'NA' exp_avoidable = abap_true currency = 'INR' shkzg = 'S' )
+*
+*                              ( mandt = sy-mandt belnr = '2' gjahr = '2021' clearing_date = syst-datum account = 'CITI'
+*                                        exp_desc = 'Grocery' amount = '345.00' member = 'Sriharsha' exp_type = 'GROC'
+*                                        exp_kind = 'NA' exp_avoidable = abap_true currency = 'INR' shkzg = 'H' )
+*
+*                           ).
+*
+*      DELETE zani_trans FROM TABLE @lt_trans.
+*
+*
+*    ENDIF.
+*
+*    SELECT *
+*    FROM zani_trans_item
+*    INTO TABLE @DATA(lt_item).
+*    IF syst-subrc eq 0.
+*
+*
+*      lt_item  = VALUE #(
+*                              ( mandt = sy-mandt belnr = '1' gjahr = '2021'   exp_desc = 'Salary Credited' amount = '12345.00' currency = 'INR'  posnr = '000010' )
+*                              ( mandt = sy-mandt belnr = '1' gjahr = '2021'   exp_desc = 'Salary Credited2' amount = '12345.00' currency = 'INR'  posnr = '000020' )
+*                              ( mandt = sy-mandt belnr = '2' gjahr = '2021'   exp_desc = 'Milk' amount = '12.00' currency = 'INR'  posnr = '000010' )
+*                              ( mandt = sy-mandt belnr = '2' gjahr = '2021'   exp_desc = 'Eggs' amount = '13.00' currency = 'INR'  posnr = '000020' )
+*
+*                           ).
+*
+*      DELETE zani_trans_item FROM TABLE @lt_item.
+*
+*
+*    ENDIF.
+
+    DATA : lv_belnr TYPE belnr_d.
+    lv_belnr = '10'.
+    data(lv_text) = |{ lv_belnr ALPHA = IN  } |.
+
+    out->write( lv_text ).
+
+
+    delete from  zani_trans WHERE exp_type  = 'GROC'.
+
+
+
+
+
+
+
+
+
+  ENDMETHOD.
+
+ENDCLASS.
