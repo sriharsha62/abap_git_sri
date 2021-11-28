@@ -1,0 +1,125 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.typeName: 'Accounting Document'
+@UI.headerInfo.typeNamePlural: 'Accounting Documents'
+@UI.headerInfo.title.value: 'belnr'
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.description.value: 'exp_desc'
+@UI.headerInfo.description.type: #STANDARD
+@Search.searchable: true
+annotate view zc_exp_trans with
+{
+
+
+
+  //For content in next page
+  @UI.facet: [
+  {
+   id:'headerlabel1',
+   type: #DATAPOINT_REFERENCE,
+   purpose: #HEADER,
+   targetQualifier: 'account'
+   },
+   {
+   id:'headerlabel2',
+   type: #DATAPOINT_REFERENCE,
+   purpose: #HEADER,
+   targetQualifier: 'member'
+   }
+   ,
+   {
+   id:'headerlabel3',
+   type: #DATAPOINT_REFERENCE,
+   purpose: #HEADER,
+   targetQualifier: 'amount'
+   },
+   //Parent - Collection facet 1st tab
+   {
+   id:'Details',
+   type:#IDENTIFICATION_REFERENCE,
+   label: 'Details'
+
+   },
+
+   {                     //2nd tab Items
+    id:'Items',
+    type:#LINEITEM_REFERENCE,
+    label: 'Items',
+    purpose: #STANDARD,
+    targetElement: '_Items'
+   }
+
+  ]
+
+
+
+
+
+
+
+
+  @UI.lineItem: [{ position: 10 , importance: #HIGH , label: 'Acc.Doc' },
+                 { type:#FOR_ACTION, dataAction: 'CopyDoc' , label: 'Copy Document', position: 10}]
+  @UI.selectionField: [{position: 10 }]
+  @EndUserText.label: 'Accounting Document'
+  @UI.identification: [{ position: 9,  label: 'Accounting Document' }]
+  belnr;
+  @UI.lineItem: [{ position: 20 , importance: #HIGH , label: 'Fiscal Year' }]
+  @UI.identification: [{ position: 10,  label: 'Fiscal Year' }]  
+  gjahr;
+  @UI.lineItem: [{ position: 30 , importance: #HIGH , label: 'Transaction Date' }]
+  @UI.identification: [{ position: 20,  label: 'Clearing Date' }]  
+  clearing_date;
+  @UI.lineItem: [{ position: 40 , importance: #HIGH , label: 'Account' }]
+  @UI.selectionField: [{position: 20 } ]
+  @EndUserText.label: 'Accounts'
+  @Search.ranking: #MEDIUM
+  @UI.dataPoint:{ title: 'Account involved' }
+  @UI.identification: [{ position: 21,  label: 'Account' }]
+  account;
+  @UI.lineItem: [{ position: 50 , importance: #HIGH , label: 'Expense on ' }]
+  @UI.selectionField: [{position: 30 } ]
+  @EndUserText.label: 'Expensed On'
+  @Search.ranking: #MEDIUM
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  @UI.dataPoint:{ title: 'Expense incurred on ' }
+  @UI.identification: [{ position: 22,  label: 'Member' }]
+  member;
+  @UI.lineItem: [{ position: 60 , importance: #HIGH , label: 'Expense Desc.' }]
+  @Search:{ defaultSearchElement: true, fuzzinessThreshold: 0.7, ranking: #HIGH  }
+  @UI.identification: [{ position: 30,  label: 'Description' }]
+  exp_desc;
+  @UI.lineItem: [{ position: 80 , importance: #HIGH , label: 'Expense Type' }]
+  @UI.identification: [{ position: 40,  label: 'Expense Type' }]
+  exp_type;
+  @UI.lineItem: [{ position: 90 , importance: #HIGH , label: 'Expense Kind' }]
+  @UI.identification: [{ position: 50,  label: 'Expense Kind' }]
+  exp_kind;
+  @UI.lineItem: [{ position: 110 , importance: #HIGH , label: 'Is Avoidable' }]
+  @UI.identification: [{ position: 60,  label: 'Expense Avoidable?' }]
+  exp_avoidable;
+  @UI.lineItem: [{ position: 120 , importance: #HIGH , label: 'Amount' }]
+  @UI.dataPoint:{ title: 'Amount' }
+  @UI.identification: [{ position: 61,  label: 'Amount' }]
+  amount;
+  @UI.lineItem: [{ position: 130 , importance: #HIGH , label: 'Currency' }]
+  currency;
+  @UI.lineItem: [{ position: 140 , importance: #HIGH , label: 'Debit/Credit' }]
+  @UI.selectionField: [{ position: 60 }]
+  @EndUserText.label: 'Debit/Credit Indicator'
+  @UI.identification: [{ position: 62,  label: 'Debit/Credit' }]
+  shkzg;
+  @UI.lineItem: [{ position: 150 , importance: #HIGH , label: 'Created By' }]
+  @UI.selectionField: [{ position: 70 }]
+  created_by;
+  @UI.lineItem: [{ position: 160 , importance: #LOW , label: 'Created Date and Time' }]
+  created_date_time;
+  @UI.lineItem: [{ position: 170 , importance: #LOW , label: 'Changed Date and Time' }]
+  changed_date_time;
+  @UI.lineItem: [{ position: 180 , importance: #LOW , label: 'Local Date and Time' }]
+  lcl_last_changedtime;
+  
+  
+
+
+}
