@@ -1,0 +1,27 @@
+managed implementation in class zbp_i_exp_trans unique;
+strict;
+
+define behavior for zi_exp_trans alias ExpHeader
+persistent table ZANI_TRANS
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  action copyDoc result[1] $self;
+  association _Items { create; }
+}
+
+define behavior for zi_exp_item alias ExpItem
+persistent table ZANI_TRANS_ITEM
+lock dependent by _Header
+authorization dependent by _Header
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) belnr, gjahr;
+  association _Header;
+}
