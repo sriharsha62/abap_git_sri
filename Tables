@@ -1,0 +1,121 @@
+-------------------------------------------------
+
+@EndUserText.label : 'Accounts'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zani_accounts {
+  key mandt   : mandt not null;
+  key account : zaccount not null;
+  name        : ztrans_name;
+
+}
+
+
+
+-----------------------------------------------------
+
+@EndUserText.label : 'expense kind'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zani_expkind {
+  key mandt    : mandt not null;
+  key exp_kind : zexp_kind not null;
+  description  : ztrans_desc;
+
+}
+
+-----------------------------------------------------
+@EndUserText.label : 'Expense type'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zani_exptype {
+  key mandt    : mandt not null;
+  key exp_type : zexp_type not null;
+  description  : abap.char(60);
+
+}
+-----------------------------------------------------
+@EndUserText.label : 'Memebers'
+@AbapCatalog.enhancement.category : #EXTENSIBLE_CHARACTER
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zani_members {
+  key mandt : mandt not null;
+  key name  : zmember not null;
+
+}
+-----------------------------------------------------
+@EndUserText.label : 'transaction items'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zani_trans_item {
+  key mandt              : mandt not null;
+  @AbapCatalog.foreignKey.keyType : #KEY
+  @AbapCatalog.foreignKey.screenCheck : true
+  key belnr              : belnr_d not null
+    with foreign key [1..*,1] zani_trans
+      where mandt = zani_trans_item.mandt
+        and belnr = zani_trans_item.belnr
+        and gjahr = zani_trans_item.gjahr;
+  key gjahr              : gjahr not null;
+  key posnr              : abap.numc(6) not null;
+  exp_desc               : abap.char(120);
+  @Semantics.amount.currencyCode : 'zani_trans_item.currency'
+  amount                 : abap.curr(15,2);
+  currency               : waers;
+  change_date_time       : abap.utclong;
+  local_change_date_time : abap.utclong;
+
+}
+-----------------------------------------------------
+@EndUserText.label : 'Transactions'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zani_trans {
+  key mandt            : mandt not null;
+  key belnr            : belnr_d not null;
+  key gjahr            : gjahr not null;
+  clearing_date        : abap.dats;
+  @AbapCatalog.foreignKey.screenCheck : true
+  account              : zaccount
+    with foreign key [1,1] zani_accounts
+      where mandt = zani_trans.mandt
+        and account = zani_trans.account;
+  @AbapCatalog.foreignKey.screenCheck : true
+  member               : zmember
+    with foreign key [1,1] zani_members
+      where mandt = zani_trans.mandt
+        and name = zani_trans.member;
+  exp_desc             : abap.char(120);
+  @AbapCatalog.foreignKey.screenCheck : true
+  exp_type             : zexp_type
+    with foreign key [1,1] zani_exptype
+      where mandt = zani_trans.mandt
+        and exp_type = zani_trans.exp_type;
+  @AbapCatalog.foreignKey.screenCheck : false
+  exp_kind             : zexp_kind
+    with foreign key [1,1] zani_expkind
+      where mandt = zani_trans.mandt
+        and exp_kind = zani_trans.exp_kind;
+  exp_avoidable        : abap_boolean;
+  @Semantics.amount.currencyCode : 'zani_trans.currency'
+  amount               : abap.curr(15,2);
+  currency             : waers;
+  shkzg                : shkzg;
+  created_by           : abap.char(40);
+  created_date_time    : abap.utclong;
+  changed_date_time    : abap.utclong;
+  lcl_last_changedtime : abap.utclong;
+
+}
