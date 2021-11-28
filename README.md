@@ -11,3 +11,7 @@ remaining are base interface views
 --------------------------------------------------------------
 
 
+zi_exp_trans - Behaviour definition - created by creating behaviour over root view - zi_exp_trans.
+zc_exp_trans - behaviour projection - created by creating behaviour over projection view -  ZC_EXP_TRANS
+
+
