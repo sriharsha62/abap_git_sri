@@ -1,0 +1,15 @@
+@EndUserText.label: 'projects on transactions items'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
+define view entity zc_exp_items as projection on zi_exp_item {
+    key belnr,
+    key gjahr,
+    key posnr,
+    exp_desc,
+    amount,
+    currency,
+    change_date_time,
+    local_change_date_time,
+    /* Associations */
+    _Header : redirected to parent zc_exp_trans
+}
