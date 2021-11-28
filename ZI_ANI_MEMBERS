@@ -1,0 +1,12 @@
+@AbapCatalog.sqlViewName: 'ZI_V_MEMBERS'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #CHECK
+@EndUserText.label: 'Members interface view'
+@Search.searchable: true
+define view zi_ani_members as select from zani_members {
+    @Search.defaultSearchElement: true
+    @Search.ranking: #HIGH
+    @Search.fuzzinessThreshold: 0.7   
+    key name as Name
+}
