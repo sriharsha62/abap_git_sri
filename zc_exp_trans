@@ -1,0 +1,29 @@
+@EndUserText.label: 'projects on transactions'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
+define root view entity zc_exp_trans as projection on zi_exp_trans {
+    key belnr,
+    key gjahr,
+    @Semantics.dateTime: true
+    clearing_date,
+    @Consumption.valueHelpDefinition: [{ entity.name: 'zi_accounts' , entity.element: 'Account' }]
+    account,
+    @Consumption.valueHelpDefinition: [{ entity.name: 'zi_ani_members' , entity.element: 'Name' }]
+    member,
+    exp_desc,
+    @Consumption.valueHelpDefinition: [{ entity.name: 'zi_ani_exptype' , entity.element: 'ExpType' }]
+    exp_type,
+    @Consumption.valueHelpDefinition: [{ entity.name: 'zi_ani_expkind' , entity.element: 'ExpKind' }]
+    exp_kind,
+    exp_avoidable,
+    amount,
+    currency,
+    shkzg,
+    created_by,
+    created_date_time,
+    changed_date_time,
+    lcl_last_changedtime,
+    /* Associations */
+    _Accounts,
+    _Items : redirected to composition child zc_exp_items
+}
