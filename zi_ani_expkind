@@ -1,0 +1,18 @@
+@AbapCatalog.sqlViewName: 'ZI_V_EXPKIND'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Expense Kind interface view'
+@Search.searchable: true
+define view zi_ani_expkind as select from zani_expkind {
+    @ObjectModel.text.element: ['Description']
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.7
+    @Search.ranking: #HIGH
+    key exp_kind as ExpKind,
+    @Semantics.text: true
+    @Search.defaultSearchElement: true
+    @Search.fuzzinessThreshold: 0.7
+    @Search.ranking: #HIGH
+    description as Description
+}
