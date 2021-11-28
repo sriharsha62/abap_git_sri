@@ -1,0 +1,27 @@
+@AbapCatalog.viewEnhancementCategory: [#NONE]
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Expense - Transaction Items'
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #B,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define view entity zi_exp_item
+  as select from zani_trans_item
+  association to parent zi_exp_trans as _Header on $projection.belnr = _Header.belnr
+                                                     and $projection.gjahr = _Header.gjahr
+{
+  key belnr,
+  key gjahr,
+  key posnr,
+      exp_desc,
+      @Semantics.amount.currencyCode: 'currency'
+      amount,
+      currency,
+      @Semantics.systemDateTime.lastChangedAt: true      
+      change_date_time,
+      @Semantics.systemDateTime.localInstanceLastChangedAt: true      
+      local_change_date_time,
+      _Header
+}
