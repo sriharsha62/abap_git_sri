@@ -1,0 +1,61 @@
+CLASS lhc_ExpHeader DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR ExpHeader RESULT result.
+
+    METHODS copyDoc FOR MODIFY
+      IMPORTING keys FOR ACTION ExpHeader~copyDoc RESULT result.
+
+ENDCLASS.
+
+CLASS lhc_ExpHeader IMPLEMENTATION.
+
+  METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD copyDoc.
+
+    DATA(lv_data) = abap_true.
+    "step 1
+    SELECT MAX( belnr ) FROM zani_trans INTO @DATA(lv_document).
+
+    READ ENTITIES OF zi_exp_trans IN LOCAL MODE ENTITY ExpHeader
+    ALL FIELDS WITH CORRESPONDING #(  Keys )
+    RESULT DATA(lt_document).
+
+    LOOP AT lt_document ASSIGNING FIELD-SYMBOL(<lfs_document>).
+
+       lv_document = lv_document + 1.
+        <lfs_document>-belnr = |{ lv_document ALPHA = IN  } |.
+    ENDLOOP.
+
+    MODIFY ENTITIES OF zi_exp_trans IN LOCAL MODE ENTITY ExpHeader
+    CREATE FIELDS (  belnr
+                     gjahr
+                     clearing_date
+                     account
+                     member
+                     exp_desc
+                     exp_type
+                     exp_kind
+                     exp_avoidable
+                     amount
+                     currency
+                     shkzg
+                   )
+    WITH CORRESPONDING #( lt_document  )
+    MAPPED DATA(lt_mapped)
+    FAILED DATA(lt_failed)
+    REPORTED DATA(lt_reported).
+
+    result = VALUE #( for ls_doc in lt_document index into lv_index
+                    ( %cid_ref = keys[  lv_index ]-%cid_ref
+                      %key-belnr = keys[ lv_index ]-belnr
+                      %key-gjahr = keys[ lv_index ]-gjahr
+                      %param = CORRESPONDING #( ls_doc ) ) ).
+
+
+  ENDMETHOD.
+
+ENDCLASS.
