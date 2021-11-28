@@ -1,32 +1,11 @@
+@AbapCatalog.sqlViewName: 'ZI_V_ACCOUNTS'
+@AbapCatalog.compiler.compareFilter: true
+@AbapCatalog.preserveKey: true
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Expense - Transactions Managed'
-define root view entity zi_exp_trans
-  as select from zani_trans
-composition[0..*] of zi_exp_item as _Items
-association[1] to zi_accounts as _Accounts on $projection.account = _Accounts.Account
-{
-  key belnr,
-  key gjahr,
-      clearing_date,
-      account,
-      member,
-      exp_desc,
-      exp_type,
-      exp_kind,
-      exp_avoidable,
-      @Semantics.amount.currencyCode: 'currency'
-      amount,
-      currency,
-      shkzg,
-      @Semantics.user.createdBy: true
-      created_by,
-      @Semantics.systemDateTime.createdAt: true
-      created_date_time,
-      @Semantics.systemDateTime.lastChangedAt: true
-      changed_date_time,
-      @Semantics.systemDateTime.localInstanceLastChangedAt: true
-      lcl_last_changedtime,
-      _Items,
-      _Accounts
-
+@EndUserText.label: 'Accounts'
+define view zi_accounts as select from zani_accounts {
+    @ObjectModel.text.element: ['Name']
+    key account as Account,
+    @Semantics.text: true
+    name as Name
 }
